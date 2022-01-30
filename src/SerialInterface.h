@@ -1,7 +1,7 @@
 #pragma once
 
 #include <malloc.h>
-#include <ros/ros.h>
+#include <rclcpp/rclcpp.hpp>
 #include <serial/serial.h>
 
 #include <memory>
