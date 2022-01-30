@@ -1,7 +1,7 @@
 #pragma once
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/Imu.h>
-#include <sensor_msgs/MagneticField.h>
+#include <sensor_msgs/msg/Imu.hpp>
+#include <sensor_msgs/msg/MagneticField.hpp>
 #include "SerialInterface.h"
 
 #include <tf/tf.h>
@@ -10,11 +10,11 @@
 #include <diagnostic_updater/publisher.h>
 
 // This is the  basic ros-based device driver of IMU
-class YostLabDriver : SerialInterface
+class YostLabDriver : public rclcpp::Node
 {
 public:
   //! constructor and destructor
-  YostLabDriver(ros::NodeHandle& nh_, ros::NodeHandle& priv_nh_);
+  YostLabDriver(); // check no parameters?
   ~YostLabDriver();
   //!
   //! \brief run: runs system
@@ -95,10 +95,13 @@ private:
   std::string frame_id_;
 
   // Node Handlers
-  ros::NodeHandle yostlab_priv_nh_;
-  ros::NodeHandle yostlab_nh_;
-  ros::Publisher imu_pub_;
-  ros::Publisher magnet_pub_;
+  // ros::NodeHandle yostlab_priv_nh_;
+  // ros::NodeHandle yostlab_nh_;
+
+  // ros::Publisher imu_pub_;
+  imu_pub_ = this->create_publisher<std_msgs::msg::Imu>("/imu", 10);
+  // ros::Publisher magnet_pub_;
+  magnet_pub_ = this->create_publisher<std_msgs::msg::MagneticField>("/imu_mag", 10);
 
   // Diagnostic_updater
   diagnostic_updater::Updater updater;
@@ -109,7 +112,7 @@ private:
   std::string axis_direction_;
   double sensor_temp_, quaternion_length_, spin_frequency_;
   int msg_counter_;
-  ros::Time lastUpdateTime_;
+  rclcpp::Time lastUpdateTime_;
   tf::Quaternion last_quat_;
 
   // Constants

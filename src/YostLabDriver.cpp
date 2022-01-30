@@ -1,22 +1,31 @@
 #include "YostLabDriver.h"
-#include <parameter_assertions/assertions.h>
+// #include <parameter_assertions/assertions.h>
 
-YostLabDriver::YostLabDriver(ros::NodeHandle &nh_, ros::NodeHandle &priv_nh_)
-  : SerialInterface(priv_nh_), yostlab_priv_nh_(priv_nh_), yostlab_nh_(nh_)
+YostLabDriver::YostLabDriver() : SerialInterface()
 {
   serialConnect();
-  imu_pub_ = yostlab_nh_.advertise<sensor_msgs::Imu>("/imu", 10);
+  imu_pub_ = yostlab_nh_.advertise<sensor_msgs::Imu>("/imu", 10); // in header now
   magnet_pub_ = yostlab_nh_.advertise<sensor_msgs::MagneticField>("/imu_mag", 10);
   updater.setHardwareIDf("IMU: %s", getSerialPort().c_str());
   updater.add("IMU Diagnostic", this, &YostLabDriver::imu_diagnostic);
 
   // use identity matrix as default orientation correction
-  assertions::param(yostlab_priv_nh_, "imu_orientation_correction", imu_orientation_correction_,
-                    std::vector<double>{ 1, 0, 0, 0, 1, 0, 0, 0, 1 });
-  assertions::param(yostlab_priv_nh_, "orientation_rotation", orientation_rotation_, 0.0);
-  assertions::getParam(yostlab_priv_nh_, "frame_id", frame_id_);
-  yostlab_priv_nh_.param("spin_frequency", spin_frequency_, 100.0);
-  assertions::param(yostlab_priv_nh_, "calibrate_imu", calibrate_imu_, false);
+  // assertions::param(yostlab_priv_nh_, "imu_orientation_correction", imu_orientation_correction_,
+                    // std::vector<double>{ 1, 0, 0, 0, 1, 0, 0, 0, 1 });
+  this->declare_parameter<std::vector<double>>("imu_orientation_correction", { 1, 0, 0, 0, 1, 0, 0, 0, 1 });
+  this->get_parameter<std::string>("imu_orientation_correction", imu_orientation_correction_);
+  // assertions::param(yostlab_priv_nh_, "orientation_rotation", orientation_rotation_, 0.0);
+  this->declare_parameter<std::double>("orientation_rotation", 0.0);
+  this->get_parameter<std::string>("orientation_rotation", orientation_rotation_);
+  // assertions::getParam(yostlab_priv_nh_, "frame_id", frame_id_);
+  this->get_parameter<std::Imu>("frame_id", frame_id_);
+  // yostlab_priv_nh_.param("spin_frequency", spin_frequency_, 100.0);
+  this->declare_parameter<std::double>("spin_frequency", 100.0);
+  this->get_parameter<std::string>("spin_frequency", spin_frequency_);
+  // assertions::param(yostlab_priv_nh_, "calibrate_imu", calibrate_imu_, false);
+  this->declare_parameter<std::bool>("calibrate_imu", false);
+  this->get_parameter<std::string>("calibrate_imu", calibrate_imu_);
+
 }
 
 //! Destructor
@@ -49,7 +58,7 @@ void YostLabDriver::imu_diagnostic(diagnostic_updater::DiagnosticStatusWrapper &
   {
     stat.summary(diagnostic_msgs::DiagnosticStatus::WARN, "IMU temp too low");
   }
-  else if ((ros::Time::now() - lastUpdateTime_).toSec() > IMU_TIMEOUT_DELAY)
+  else if ((rclcpp::Time::now() - lastUpdateTime_).toSec() > IMU_TIMEOUT_DELAY)
   {
     stat.summary(diagnostic_msgs::DiagnosticStatus::ERROR, "IMU not updating");
   }
@@ -129,7 +138,7 @@ void YostLabDriver::startGyroCalibration()
   flush();
   ROS_INFO_STREAM(logger << "Starting Auto Gyro Calibration");
   serialWriteString(BEGIN_GYRO_AUTO_CALIB);
-  ros::Duration(5.0).sleep();
+  rclcpp::Duration(5.0).sleep();
 }
 
 void YostLabDriver::setMIMode(bool on)
@@ -190,12 +199,12 @@ void YostLabDriver::run()
   serialWriteString(SET_STREAMING_TIMING_5_MS);
   serialWriteString(START_STREAMING);
 
-  ros::Rate loop_rate(spin_frequency_);  // Hz
+  rclcpp::Rate loop_rate(spin_frequency_);  // Hz
 
   int line_num_ = 0;
   std::vector<double> parsed_val;
 
-  while (ros::ok())
+  while (rclcpp::ok())
   {
     while (available() > 0)
     {
@@ -220,7 +229,7 @@ void YostLabDriver::run()
     }
     updater.update();
     loop_rate.sleep();
-    ros::spinOnce();
+    rclcpp::spinOnce();
   }
 }
 
@@ -233,7 +242,7 @@ void YostLabDriver::setAndCheckIMUSettings()
   serialWriteString(COMMIT_SETTINGS);
 
   // small delay to allow imu to commit its settings before we read them back
-  ros::Duration(0.02).sleep();
+  rclcpp::Duration(0.02).sleep();
 
   // print/debug statements
   software_version_ = getSoftwareVersion();
@@ -252,11 +261,11 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
 
   sensor_msgs::Imu imu_msg;
   imu_msg.header.seq = msg_counter_;
-  imu_msg.header.stamp = ros::Time::now();
+  imu_msg.header.stamp = rclcpp::Time::now();
   imu_msg.header.frame_id = frame_id_;
   sensor_msgs::MagneticField magnet_msg;
   magnet_msg.header.seq = msg_counter_;
-  magnet_msg.header.stamp = ros::Time::now();
+  magnet_msg.header.stamp = rclcpp::Time::now();
   magnet_msg.header.frame_id = frame_id_;
 
   // construct quaternion with (x,y,z,w)
@@ -310,7 +319,7 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
 
   imu_pub_.publish(imu_msg);
   magnet_pub_.publish(magnet_msg);  // Published in teslas
-  lastUpdateTime_ = ros::Time::now();
+  lastUpdateTime_ = rclcpp::Time::now();
   last_quat_ = quat;
   msg_counter_++;
 }
