@@ -11,13 +11,14 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
 find_package(serial REQUIRED)
 
 add_executable(${PROJECT_NAME}   
   src/YostLabDriver.cpp
   src/YostLabDriverNode.cpp
 )
-ament_target_dependencies(${PROJECT_NAME} serial)
+ament_target_dependencies(${PROJECT_NAME} rclcpp serial)
 
 install(TARGETS
   ${PROJECT_NAME}
