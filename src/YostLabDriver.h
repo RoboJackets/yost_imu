@@ -1,12 +1,12 @@
 #pragma once
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/Imu.h>
-#include <sensor_msgs/MagneticField.h>
+#include <sensor_msgs/msg/imu.hpp>
+#include <sensor_msgs/msg/magnetic_field.hpp>
+#include <diagnostic_updater/diagnostic_updater.hpp>
 #include "SerialInterface.h"
 
-#include <tf/tf.h>
 #include <Eigen/Dense>
-#include <diagnostic_updater/diagnostic_updater.h>
+#include <tf/tf.h>
 #include <diagnostic_updater/publisher.h>
 
 // This is the  basic ros-based device driver of IMU
