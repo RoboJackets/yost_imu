@@ -1,4 +1,4 @@
-#include "YostLabDriver.h"
+#include "YostLabDriver.hpp"
 // #include <parameter_assertions/assertions.h>
 
 YostLabDriver::YostLabDriver() : SerialInterface()

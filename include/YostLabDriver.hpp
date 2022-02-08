@@ -1,13 +1,13 @@
 #pragma once
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/msg/Imu.hpp>
-#include <sensor_msgs/msg/MagneticField.hpp>
-#include "SerialInterface.h"
+#include <sensor_msgs/msg/imu.hpp>
+#include <sensor_msgs/msg/magnetic_field.hpp>
+#include "SerialInterface.hpp"
 
-#include <tf/tf.h>
+#include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
-#include <diagnostic_updater/diagnostic_updater.h>
-#include <diagnostic_updater/publisher.h>
+#include <diagnostic_updater/diagnostic_updater.hpp>
+#include <diagnostic_updater/publisher.hpp>
 
 // This is the  basic ros-based device driver of IMU
 class YostLabDriver : public rclcpp::Node

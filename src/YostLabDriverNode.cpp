@@ -1,8 +1,9 @@
-#include "YostLabDriver.h"
+#include "YostLabDriver.hpp"
 
 int main(int argc, char **argv)
 {
   rclcpp::init(argc, argv);
+  auto node = rclcpp::Node::make_shared("imu");
   rclcpp::spin(std::make_shared<YostLabDriver>());
   rclcpp::shutdown();
   
