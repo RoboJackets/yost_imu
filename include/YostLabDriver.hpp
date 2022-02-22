@@ -2,6 +2,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/imu.hpp>
 #include <sensor_msgs/msg/magnetic_field.hpp>
+
 #include "SerialInterface.hpp"
 
 #include <tf2_eigen/tf2_eigen.h>
@@ -99,11 +100,12 @@ private:
   // Node Handlers
   // ros::NodeHandle yostlab_priv_nh_;
   // ros::NodeHandle yostlab_nh_;
+  Node node;
 
   // ros::Publisher imu_pub_;
-  imu_pub_ = this->create_publisher<std_msgs::msg::Imu>("/imu", 10);
+  Node imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 10);
   // ros::Publisher magnet_pub_;
-  magnet_pub_ = this->create_publisher<std_msgs::msg::MagneticField>("/imu_mag", 10);
+  Node magnet_pub_ = this->create_publisher<sensor_msgs::msg::MagneticField>("/imu_mag", 10);
 
   // Diagnostic_updater
   diagnostic_updater::Updater updater;
