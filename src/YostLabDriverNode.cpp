@@ -1,6 +1,6 @@
 #include "YostLabDriver.hpp"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("imu");

@@ -1,6 +1,8 @@
 #include "YostLabDriver.hpp"
 // #include <parameter_assertions/assertions.h>
 
+using namespace std::chrono_literals;
+
 YostLabDriver::YostLabDriver() : SerialInterface()
 {
   serialConnect();

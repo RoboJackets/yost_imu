@@ -2,6 +2,9 @@
 
 #include <malloc.h>
 #include <rclcpp/rclcpp.hpp>
+#include <chrono>
+#include <string>
+#include <functional>
 #include <serial/serial.h>
 
 #include <memory>
@@ -22,10 +25,10 @@ private:
   const std::string log_zone_;
 
 public:
-  SerialInterface(ros::NodeHandle &serial_nh_) : log_zone_("[ SerialInterface ] ")
+  SerialInterface(rclcpp::Node &serial_node_) : log_zone_("[ SerialInterface ] ")
   {
-    serial_nh_.param<int>("BAUD_RATE", baud_, 115200);
-    serial_nh_.param<std::string>("SERIAL_PORT", port_, "/dev/imu_top");
+    this->declare_parameter<int>("BAUD_RATE", baud_, 115200);
+    this->declare_parameter<std::string>("SERIAL_PORT", port_, "/dev/imu_top");
   }
 
   const int &getBaudRate()

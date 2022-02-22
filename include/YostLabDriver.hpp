@@ -9,6 +9,8 @@
 #include <diagnostic_updater/diagnostic_updater.hpp>
 #include <diagnostic_updater/publisher.hpp>
 
+using namespace std::chrono_literals;
+
 // This is the  basic ros-based device driver of IMU
 class YostLabDriver : public rclcpp::Node
 {
