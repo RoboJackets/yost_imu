@@ -1,9 +1,10 @@
 #include "YostLabDriver.hpp"
+#include "SerialInterface.hpp" // check this
 // #include <parameter_assertions/assertions.h>
 
 using namespace std::chrono_literals;
 
-YostLabDriver::YostLabDriver() : SerialInterface()
+YostLabDriver::YostLabDriver()
 {
   serialConnect();
   updater.setHardwareIDf("IMU: %s", getSerialPort().c_str());
@@ -15,15 +16,15 @@ YostLabDriver::YostLabDriver() : SerialInterface()
   this->declare_parameter<std::vector<double>>("imu_orientation_correction", { 1, 0, 0, 0, 1, 0, 0, 0, 1 });
   this->get_parameter("imu_orientation_correction", imu_orientation_correction_);
   // assertions::param(yostlab_priv_nh_, "orientation_rotation", orientation_rotation_, 0.0);
-  this->declare_parameter<std::double>("orientation_rotation", 0.0);
+  this->declare_parameter<double>("orientation_rotation", 0.0);
   this->get_parameter("orientation_rotation", orientation_rotation_);
   // assertions::getParam(yostlab_priv_nh_, "frame_id", frame_id_);
   this->get_parameter("frame_id", frame_id_);
   // yostlab_priv_nh_.param("spin_frequency", spin_frequency_, 100.0);
-  this->declare_parameter<std::double>("spin_frequency", 100.0);
+  this->declare_parameter<double>("spin_frequency", 100.0);
   this->get_parameter("spin_frequency", spin_frequency_);
   // assertions::param(yostlab_priv_nh_, "calibrate_imu", calibrate_imu_, false);
-  this->declare_parameter<std::bool>("calibrate_imu", false);
+  this->declare_parameter<bool>("calibrate_imu", false);
   this->get_parameter("calibrate_imu", calibrate_imu_);
 
 }
