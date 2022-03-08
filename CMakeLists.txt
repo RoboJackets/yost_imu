@@ -6,6 +6,7 @@ find_package(serial REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(diagnostic_updater REQUIRED)
+find_package(diagnostic_msgs REQUIRED)
 find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3)
 
@@ -26,6 +27,7 @@ ament_export_dependencies(serial)
 ament_export_dependencies(rclcpp)
 ament_export_dependencies(sensor_msgs)
 ament_export_dependencies(diagnostic_updater)
+ament_export_dependencies(diagnostic_msgs)
 
 
 

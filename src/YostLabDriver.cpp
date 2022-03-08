@@ -1,12 +1,16 @@
 #include "YostLabDriver.hpp"
-#include "SerialInterface.hpp" // check this
+#include "SerialInterface.hpp"
+#include <diagnostic_msgs/msg/diagnostic_status.hpp>
 // #include <parameter_assertions/assertions.h>
 
 using namespace std::chrono_literals;
 
-YostLabDriver::YostLabDriver()
+YostLabDriver::YostLabDriver() : Node("IMU"), SerialInterface()
 {
+  this->setSerialNode(*this);
   serialConnect();
+  diagnostic_updater::Updater update(this);
+  this->updater = update;
   updater.setHardwareIDf("IMU: %s", getSerialPort().c_str());
   updater.add("IMU Diagnostic", this, &YostLabDriver::imu_diagnostic);
 
@@ -21,8 +25,8 @@ YostLabDriver::YostLabDriver()
   // assertions::getParam(yostlab_priv_nh_, "frame_id", frame_id_);
   this->get_parameter("frame_id", frame_id_);
   // yostlab_priv_nh_.param("spin_frequency", spin_frequency_, 100.0);
-  this->declare_parameter<double>("spin_frequency", 100.0);
-  this->get_parameter("spin_frequency", spin_frequency_);
+  // this->declare_parameter<double>("spin_frequency", 100.0);
+  // this->get_parameter("spin_frequency", spin_frequency_);
   // assertions::param(yostlab_priv_nh_, "calibrate_imu", calibrate_imu_, false);
   this->declare_parameter<bool>("calibrate_imu", false);
   this->get_parameter("calibrate_imu", calibrate_imu_);
@@ -32,7 +36,7 @@ YostLabDriver::YostLabDriver()
 //! Destructor
 YostLabDriver::~YostLabDriver()
 {
-  updater.broadcast(diagnostic_msgs::DiagnosticStatus::ERROR, "IMU Node Terminated");
+  updater.broadcast(diagnostic_msgs::msg::DiagnosticStatus::ERROR, "IMU Node Terminated");
 }
 
 void YostLabDriver::restoreFactorySettings()
@@ -45,7 +49,7 @@ std::string YostLabDriver::getSoftwareVersion()
   flush();
   serialWriteString(GET_FIRMWARE_VERSION_STRING);
   const std::string buf = serialReadLine();
-  ROS_INFO_STREAM(logger << "Software version: " << buf);
+  RCLCPP_INFO(this->get_logger(), "Software version: %s", buf);
   return buf;
 }
 
@@ -53,23 +57,23 @@ void YostLabDriver::imu_diagnostic(diagnostic_updater::DiagnosticStatusWrapper &
 {
   if (sensor_temp_ > MAX_IMU_TEMP)
   {
-    stat.summary(diagnostic_msgs::DiagnosticStatus::WARN, "IMU temp too high");
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::WARN, "IMU temp too high");
   }
   else if (sensor_temp_ < MIN_IMU_TEMP)
   {
-    stat.summary(diagnostic_msgs::DiagnosticStatus::WARN, "IMU temp too low");
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::WARN, "IMU temp too low");
   }
-  else if ((rclcpp::Time::now() - lastUpdateTime_).toSec() > IMU_TIMEOUT_DELAY)
+  else if ((this->get_clock()->now() - lastUpdateTime_).seconds() > IMU_TIMEOUT_DELAY)
   {
-    stat.summary(diagnostic_msgs::DiagnosticStatus::ERROR, "IMU not updating");
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::ERROR, "IMU not updating");
   }
   else if (abs(quaternion_length_ - 1.0) > QUATERNION_LENGTH_TOL)
   {
-    stat.summary(diagnostic_msgs::DiagnosticStatus::WARN, "IMU quaternion isn't normalized");
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::WARN, "IMU quaternion isn't normalized");
   }
   else
   {
-    stat.summary(diagnostic_msgs::DiagnosticStatus::OK, "IMU Online");
+    stat.summary(diagnostic_msgs::msg::DiagnosticStatus::OK, "IMU Online");
   }
   stat.add("software_version", software_version_);
   stat.add("calibration_mode", calibration_mode_);
@@ -77,7 +81,7 @@ void YostLabDriver::imu_diagnostic(diagnostic_updater::DiagnosticStatusWrapper &
   stat.add("axis_direction", axis_direction_);
   stat.add("imu_temp", sensor_temp_);
   double roll, pitch, yaw;
-  tf::Matrix3x3(last_quat_).getRPY(roll, pitch, yaw);
+  tf2::Matrix3x3(last_quat_).getRPY(roll, pitch, yaw);
   double radian_to_degrees = 180.0 / M_PI;
   stat.add("roll", roll * radian_to_degrees);
   stat.add("pitch", pitch * radian_to_degrees);
@@ -105,7 +109,7 @@ std::string YostLabDriver::getEulerDecomp()
     else
       return "Unknown";
   }();
-  ROS_INFO_STREAM(logger << "Euler Decomposition: " << ret_buf << ", buf is: " << buf);
+  RCLCPP_INFO(this->get_logger(), "Euler Decomposition: %s, buf is: %s", ret_buf, buf);
   return ret_buf;
 }
 
@@ -130,16 +134,16 @@ std::string YostLabDriver::getAxisDirection()
     else
       return "Unknown";
   }();
-  ROS_INFO_STREAM(logger << "Axis Direction: " << ret_buf << ", buf is: " << buf);
+  RCLCPP_INFO(this->get_logger(), "Axis Direction: %s, buf is: %s", ret_buf, buf);
   return ret_buf;
 }
 
 void YostLabDriver::startGyroCalibration()
 {
   flush();
-  ROS_INFO_STREAM(logger << "Starting Auto Gyro Calibration");
+  RCLCPP_INFO(this->get_logger(), "Starting Auto Gyro Calibration");
   serialWriteString(BEGIN_GYRO_AUTO_CALIB);
-  rclcpp::Duration(5.0).sleep();
+  rclcpp::sleep_for(std::chrono::seconds(5));
 }
 
 void YostLabDriver::setMIMode(bool on)
@@ -163,7 +167,7 @@ std::string YostLabDriver::getCalibMode()
     else
       return "Unknown";
   }();
-  ROS_INFO_STREAM(logger << "Calibration Mode: " << ret_buf << ", buf is: " << buf);
+  RCLCPP_INFO(this->get_logger(), "Calibration Mode: %s, buf is: %s", ret_buf, buf);
   return ret_buf;
 }
 
@@ -180,7 +184,7 @@ std::string YostLabDriver::getMIMode()
     else
       return "Unknown";
   }();
-  ROS_INFO_STREAM(logger << "MI Mode: " << ret_buf << ", buf is: " << buf);
+  RCLCPP_INFO(this->get_logger(), "MI Mode: %s, buf is: %s", ret_buf, buf);
   return ret_buf;
 }
 
@@ -200,8 +204,10 @@ void YostLabDriver::run()
   serialWriteString(SET_STREAMING_TIMING_5_MS);
   serialWriteString(START_STREAMING);
 
-  rclcpp::Rate loop_rate(spin_frequency_);  // Hz
+}
 
+void YostLabDriver::run2()
+{
   int line_num_ = 0;
   std::vector<double> parsed_val;
 
@@ -222,15 +228,12 @@ void YostLabDriver::run()
         }
         else
         {
-          ROS_WARN_STREAM("Incomplete message from IMU. Throwing it away.");
+          RCLCPP_WARN(this->get_logger(), "Incomplete message from IMU. Throwing it away.");
         }
         parsed_val.clear();
         line_num_ = 0;
       }
     }
-    updater.update();
-    loop_rate.sleep();
-    rclcpp::spinOnce();
   }
 }
 
@@ -243,7 +246,7 @@ void YostLabDriver::setAndCheckIMUSettings()
   serialWriteString(COMMIT_SETTINGS);
 
   // small delay to allow imu to commit its settings before we read them back
-  rclcpp::Duration(0.02).sleep();
+  rclcpp::sleep_for(std::chrono::milliseconds(2));
 
   // print/debug statements
   software_version_ = getSoftwareVersion();
@@ -258,35 +261,36 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
   // orientation correction matrices in 3x3 row-major format and quaternion
   static const Eigen::Matrix<double, 3, 3, Eigen::RowMajor> correction_mat(imu_orientation_correction_.data());
   static const Eigen::Quaternion<double> correction_mat_quat(correction_mat);
-  static const tf::Quaternion rot = tf::createQuaternionFromYaw(orientation_rotation_);
+  static tf2::Quaternion rot;
+  rot.setRPY(0, 0, orientation_rotation_);
 
-  sensor_msgs::Imu imu_msg;
-  imu_msg.header.seq = msg_counter_;
-  imu_msg.header.stamp = rclcpp::Time::now();
+  sensor_msgs::msg::Imu imu_msg;
+  // imu_msg.header.seq = msg_counter_;
+  imu_msg.header.stamp = this->get_clock()->now();
   imu_msg.header.frame_id = frame_id_;
-  sensor_msgs::MagneticField magnet_msg;
-  magnet_msg.header.seq = msg_counter_;
-  magnet_msg.header.stamp = rclcpp::Time::now();
+  sensor_msgs::msg::MagneticField magnet_msg;
+  // magnet_msg.header.seq = msg_counter_;
+  magnet_msg.header.stamp = this->get_clock()->now();
   magnet_msg.header.frame_id = frame_id_;
 
   // construct quaternion with (x,y,z,w)
-  tf::Quaternion quat{ parsed_val[0], parsed_val[1], parsed_val[2], parsed_val[3] };
-  quaternion_length_ = tf::length(quat);
+  tf2::Quaternion quat{ parsed_val[0], parsed_val[1], parsed_val[2], parsed_val[3] };
+  quaternion_length_ = tf2::length(quat);
   quat = rot * quat;
 
   // the tf::Quaternion has a method to access roll pitch and yaw
   double roll, pitch, yaw;
-  tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+  tf2::Matrix3x3(quat).getRPY(roll, pitch, yaw);
 
   // the found angles are written in a geometry_msgs::Vector3
-  geometry_msgs::Vector3 rpy;
+  geometry_msgs::msg::Vector3 rpy;
   rpy.x = roll;
   rpy.y = pitch;
   rpy.z = yaw;
 
 
   // Filtered orientation estimate
-  tf::quaternionTFToMsg(quat, imu_msg.orientation);
+  tf2::convert(quat, imu_msg.orientation);
   imu_msg.orientation_covariance = { .1, 0, 0, 0, .1, 0, 0, 0, .1 };
 
   // Corrected angular velocity.
@@ -320,7 +324,7 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
 
   imu_pub_.publish(imu_msg);
   magnet_pub_.publish(magnet_msg);  // Published in teslas
-  lastUpdateTime_ = rclcpp::Time::now();
+  lastUpdateTime_ = this->get_clock()->now();
   last_quat_ = quat;
   msg_counter_++;
 }

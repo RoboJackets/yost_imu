@@ -11,6 +11,7 @@
   <depend>rclcpp</depend>
   <depend>sensor_msgs</depend>
   <depend>diagnostic_updater</depend>
+  <depend>diagnostic_msgs</depend>
   <buildtool_depend>eigen3_cmake_module</buildtool_depend>
   <build_depend>eigen</build_depend>
 

@@ -3,14 +3,17 @@
 int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
-  auto node = rclcpp::Node::make_shared("imu");
-  rclcpp::spin(std::make_shared<YostLabDriver>());
-  rclcpp::shutdown();
+  auto node = std::make_shared<YostLabDriver>();
   
-  // ros::NodeHandle nh;
-  // ros::NodeHandle priv_nh("~");
-  // YostLabDriver imu_drv(nh, priv_nh);
-  // imu_drv.run();
-
+  node->run();
+  double spin_frequency_ = 100.0;
+  rclcpp::Rate loop_rate(spin_frequency_); // Hz
+  while(rclcpp::ok())
+  {
+    node->run2();
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+  }
+  rclcpp::shutdown();
   return 0;
 }

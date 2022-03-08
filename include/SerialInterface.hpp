@@ -23,12 +23,21 @@ private:
   bool connected_ = false;
   // logger zone
   const std::string log_zone_;
+  // local serial node
+  // rclcpp::Node *local_serial_node_;
 
 public:
-  SerialInterface(rclcpp::Node &serial_node_) : log_zone_("[ SerialInterface ] ")
+  SerialInterface() : log_zone_("[ SerialInterface ] ")
   {
-    this->declare_parameter<int>("BAUD_RATE", baud_, 115200);
-    this->declare_parameter<std::string>("SERIAL_PORT", port_, "/dev/imu_top");
+    
+  }
+
+  void setSerialNode(rclcpp::Node &serial_node_)
+  {
+    serial_node_.declare_parameter<int>("BAUD_RATE", 115200);
+    serial_node_.get_parameter("BAUD_RATE", baud_);
+    serial_node_.declare_parameter<std::string>("SERIAL_PORT", "/dev/imu_top");
+    serial_node_.get_parameter("SERIAL_PORT", port_);
   }
 
   const int &getBaudRate()
@@ -63,7 +72,7 @@ public:
     {
       if (connection_port_->isOpen())
       {
-        ROS_INFO_STREAM(log_zone_ << " Closing the Serial Port");
+        RCLCPP_INFO(local_serial_node_.get_logger(log_zone_), " Closing the Serial Port: %s", port_);
         connection_port_->close();
         connected_ = false;
       }
@@ -84,15 +93,14 @@ public:
     catch (IOException &e)
     {
       std::string ioerror = e.what();
-      ROS_ERROR_STREAM(log_zone_ << "Unable to connect port: " << port_.c_str());
-      ROS_ERROR_STREAM(log_zone_ << "Is the serial port open? : " << ioerror.c_str());
+      RCLCPP_ERROR(local_serial_node_.get_logger(log_zone_), "Unable to connect port: %s", port_.c_str());
+      RCLCPP_ERROR(local_serial_node_.get_logger(log_zone_), "Is the serial port open? : %s", ioerror.c_str());
       connected_ = false;
     }
 
     if (connection_port_ && connection_port_->isOpen())
     {
-      ROS_INFO_STREAM(log_zone_ << "Connection Established with Port: " << port_.c_str()
-                                << " with baudrate: " << baud_);
+      RCLCPP_INFO(local_serial_node_.get_logger(log_zone_), "Connection Established with Port: %s with baudrate: %d", port_.c_str(), baud_);
       connected_ = true;
     }
   }
