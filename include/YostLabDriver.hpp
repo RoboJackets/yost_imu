@@ -8,13 +8,16 @@
 #include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
 #include <diagnostic_updater/diagnostic_updater.hpp>
-#include <diagnostic_updater/publisher.hpp>
+// #include <diagnostic_updater/publisher.hpp>
+
+#include <memory>
 
 using namespace std::chrono_literals;
 
 // This is the  basic ros-based device driver of IMU
 class YostLabDriver : public rclcpp::Node, SerialInterface
 {
+  
 public:
   //! constructor and destructor
   YostLabDriver();
@@ -102,15 +105,15 @@ private:
   // ros::NodeHandle yostlab_priv_nh_;
   // ros::NodeHandle yostlab_nh_;
   // Node node;
-  rclcpp::Publisher<sensor_msgs:msg::String>::SharedPtr imu_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_pub_;
 
   // ros::Publisher imu_pub_;
-  imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 10);
+  // imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 10);
   // ros::Publisher magnet_pub_;
-  YostLabDriver magnet_pub_ = this->create_publisher<sensor_msgs::msg::MagneticField>("/imu_mag", 10);
+  rclcpp::Publisher<sensor_msgs::msg::MagneticField>::SharedPtr magnet_pub_;
 
   // Diagnostic_updater
-  diagnostic_updater::Updater updater;
+  std::unique_ptr<diagnostic_updater::Updater> updater;
 
   std::string software_version_;
   std::string calibration_mode_;

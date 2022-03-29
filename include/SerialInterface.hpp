@@ -27,10 +27,10 @@ private:
   // rclcpp::Node *local_serial_node_;
 
 public:
-  SerialInterface() : log_zone_("[ SerialInterface ] ")
-  {
+  // SerialInterface() : log_zone_("[ SerialInterface ] ")
+  // {
     
-  }
+  // }
 
   void setSerialNode(rclcpp::Node &serial_node_)
   {
@@ -72,7 +72,7 @@ public:
     {
       if (connection_port_->isOpen())
       {
-        RCLCPP_INFO(local_serial_node_.get_logger(log_zone_), " Closing the Serial Port: %s", port_);
+        // RCLCPP_INFO(local_serial_node_.get_logger(log_zone_), " Closing the Serial Port: %s", port_);
         connection_port_->close();
         connected_ = false;
       }
@@ -93,14 +93,14 @@ public:
     catch (IOException &e)
     {
       std::string ioerror = e.what();
-      RCLCPP_ERROR(local_serial_node_.get_logger(log_zone_), "Unable to connect port: %s", port_.c_str());
-      RCLCPP_ERROR(local_serial_node_.get_logger(log_zone_), "Is the serial port open? : %s", ioerror.c_str());
+      // RCLCPP_ERROR(local_serial_node_.get_logger(log_zone_), "Unable to connect port: %s", port_.c_str());
+      // RCLCPP_ERROR(local_serial_node_.get_logger(log_zone_), "Is the serial port open? : %s", ioerror.c_str());
       connected_ = false;
     }
 
     if (connection_port_ && connection_port_->isOpen())
     {
-      RCLCPP_INFO(local_serial_node_.get_logger(log_zone_), "Connection Established with Port: %s with baudrate: %d", port_.c_str(), baud_);
+      // RCLCPP_INFO(local_serial_node_.get_logger(log_zone_), "Connection Established with Port: %s with baudrate: %d", port_.c_str(), baud_);
       connected_ = true;
     }
   }

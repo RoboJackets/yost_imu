@@ -10,9 +10,12 @@ YostLabDriver::YostLabDriver() : Node("IMU"), SerialInterface()
   this->setSerialNode(*this);
   serialConnect();
   diagnostic_updater::Updater update(this);
-  this->updater = update;
-  updater.setHardwareIDf("IMU: %s", getSerialPort().c_str());
-  updater.add("IMU Diagnostic", this, &YostLabDriver::imu_diagnostic);
+  this->updater = std::make_unique<diagnostic_updater::Updater>(this);
+  updater->setHardwareIDf("IMU: %s", getSerialPort().c_str());
+  updater->add("IMU Diagnostic", this, &YostLabDriver::imu_diagnostic);
+
+  imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 10);
+  magnet_pub_ = this->create_publisher<sensor_msgs::msg::MagneticField>("/imu_mag", 10);
 
   // use identity matrix as default orientation correction
   // assertions::param(yostlab_priv_nh_, "imu_orientation_correction", imu_orientation_correction_,
@@ -36,7 +39,7 @@ YostLabDriver::YostLabDriver() : Node("IMU"), SerialInterface()
 //! Destructor
 YostLabDriver::~YostLabDriver()
 {
-  updater.broadcast(diagnostic_msgs::msg::DiagnosticStatus::ERROR, "IMU Node Terminated");
+  updater->broadcast(diagnostic_msgs::msg::DiagnosticStatus::ERROR, "IMU Node Terminated");
 }
 
 void YostLabDriver::restoreFactorySettings()
@@ -49,7 +52,7 @@ std::string YostLabDriver::getSoftwareVersion()
   flush();
   serialWriteString(GET_FIRMWARE_VERSION_STRING);
   const std::string buf = serialReadLine();
-  RCLCPP_INFO(this->get_logger(), "Software version: %s", buf);
+  RCLCPP_INFO(this->get_logger(), "Software version: %s", buf.c_str());
   return buf;
 }
 
@@ -109,7 +112,7 @@ std::string YostLabDriver::getEulerDecomp()
     else
       return "Unknown";
   }();
-  RCLCPP_INFO(this->get_logger(), "Euler Decomposition: %s, buf is: %s", ret_buf, buf);
+  RCLCPP_INFO(this->get_logger(), "Euler Decomposition: %s, buf is: %s", ret_buf.c_str(), buf.c_str());
   return ret_buf;
 }
 
@@ -134,7 +137,7 @@ std::string YostLabDriver::getAxisDirection()
     else
       return "Unknown";
   }();
-  RCLCPP_INFO(this->get_logger(), "Axis Direction: %s, buf is: %s", ret_buf, buf);
+  RCLCPP_INFO(this->get_logger(), "Axis Direction: %s, buf is: %s", ret_buf.c_str(), buf.c_str());
   return ret_buf;
 }
 
@@ -167,7 +170,7 @@ std::string YostLabDriver::getCalibMode()
     else
       return "Unknown";
   }();
-  RCLCPP_INFO(this->get_logger(), "Calibration Mode: %s, buf is: %s", ret_buf, buf);
+  RCLCPP_INFO(this->get_logger(), "Calibration Mode: %s, buf is: %s", ret_buf.c_str(), buf.c_str());
   return ret_buf;
 }
 
@@ -184,7 +187,7 @@ std::string YostLabDriver::getMIMode()
     else
       return "Unknown";
   }();
-  RCLCPP_INFO(this->get_logger(), "MI Mode: %s, buf is: %s", ret_buf, buf);
+  RCLCPP_INFO(this->get_logger(), "MI Mode: %s, buf is: %s", ret_buf.c_str(), buf.c_str());
   return ret_buf;
 }
 
@@ -259,7 +262,7 @@ void YostLabDriver::setAndCheckIMUSettings()
 void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
 {
   // orientation correction matrices in 3x3 row-major format and quaternion
-  static const Eigen::Matrix<double, 3, 3, Eigen::RowMajor> correction_mat(imu_orientation_correction_.data());
+  /*static const Eigen::Matrix<double, 3, 3, Eigen::RowMajor> correction_mat(imu_orientation_correction_.data());
   static const Eigen::Quaternion<double> correction_mat_quat(correction_mat);
   static tf2::Quaternion rot;
   rot.setRPY(0, 0, orientation_rotation_);
@@ -288,9 +291,14 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
   rpy.y = pitch;
   rpy.z = yaw;
 
+  // geometry_msgs::msg::Quaternion geometry_quaternion;
+  // geometry_quaternion.x = quat.getX();
+  // geometry_quaternion.y = quat.getY();
+  // geometry_quaternion.z = quat.getZ();
+  // geometry_quaternion.w = quat.getW();
+
 
   // Filtered orientation estimate
-  tf2::convert(quat, imu_msg.orientation);
   imu_msg.orientation_covariance = { .1, 0, 0, 0, .1, 0, 0, 0, .1 };
 
   // Corrected angular velocity.
@@ -305,28 +313,29 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
   Eigen::Vector3d compass_raw(parsed_val[10], parsed_val[11], parsed_val[12]);
   compass_raw = correction_mat * compass_raw * GAUSSTOTESLA;
 
-  imu_msg.angular_velocity.x = angular_vel_raw[0];
-  imu_msg.angular_velocity.y = angular_vel_raw[1];
-  imu_msg.angular_velocity.z = angular_vel_raw[2];
+  imu_msg.angular_velocity.x = angular_vel_raw.x();
+  imu_msg.angular_velocity.y = angular_vel_raw.y();
+  imu_msg.angular_velocity.z = angular_vel_raw.z();
   imu_msg.angular_velocity_covariance = { .1, 0, 0, 0, .1, 0, 0, 0, .07 };
 
-  imu_msg.linear_acceleration.x = linear_accel_raw[0];
-  imu_msg.linear_acceleration.y = linear_accel_raw[1];
-  imu_msg.linear_acceleration.z = linear_accel_raw[2];
+  imu_msg.linear_acceleration.x = linear_accel_raw.x();
+  imu_msg.linear_acceleration.y = linear_accel_raw.y();
+  imu_msg.linear_acceleration.z = linear_accel_raw.z();
   imu_msg.linear_acceleration_covariance = { .1, 0, 0, 0, .1, 0, 0, 0, .1 };
 
-  magnet_msg.magnetic_field.x = compass_raw[0];
-  magnet_msg.magnetic_field.y = compass_raw[1];
-  magnet_msg.magnetic_field.z = compass_raw[2];
+  magnet_msg.magnetic_field.x = compass_raw.x();
+  magnet_msg.magnetic_field.y = compass_raw.y();
+  magnet_msg.magnetic_field.z = compass_raw.z();
   magnet_msg.magnetic_field_covariance = { 1e-6, 0, 0, 0, 1e-6, 0, 0, 0, 1e-6 };
 
   sensor_temp_ = parsed_val[13];
 
-  imu_pub_.publish(imu_msg);
-  magnet_pub_.publish(magnet_msg);  // Published in teslas
+  // imu_pub_->publish(imu_msg);
+  // magnet_pub_->publish(magnet_msg);  // Published in teslas
   lastUpdateTime_ = this->get_clock()->now();
   last_quat_ = quat;
   msg_counter_++;
+  */
 }
 
 int YostLabDriver::addToParsedVals(const std::string &buf, std::vector<double> &parsed_vals)
