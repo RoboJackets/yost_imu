@@ -1,0 +1,23 @@
+[0.041s] Invoking command in '/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver': CMAKE_PREFIX_PATH=/opt/ros/galactic /usr/bin/cmake /home/loisyaelee/dev_ws/src/yost_imu -DCMAKE_INSTALL_PREFIX=/home/loisyaelee/dev_ws/src/yost_imu/install/yost_imu_driver
+[0.087s] -- Found ament_cmake: 1.1.5 (/opt/ros/galactic/share/ament_cmake/cmake)
+[0.166s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[4.045s] CMake Error at CMakeLists.txt:5 (find_package):
+[4.045s]   By not providing "Findserial.cmake" in CMAKE_MODULE_PATH this project has
+[4.046s]   asked CMake to find a package configuration file provided by "serial", but
+[4.046s]   CMake did not find one.
+[4.046s] 
+[4.047s]   Could not find a package configuration file provided by "serial" with any
+[4.047s]   of the following names:
+[4.048s] 
+[4.048s]     serialConfig.cmake
+[4.048s]     serial-config.cmake
+[4.048s] 
+[4.049s]   Add the installation prefix of "serial" to CMAKE_PREFIX_PATH or set
+[4.050s]   "serial_DIR" to a directory containing one of the above files.  If "serial"
+[4.050s]   provides a separate development package or SDK, be sure it has been
+[4.051s]   installed.
+[4.052s] 
+[4.053s] 
+[4.054s] -- Configuring incomplete, errors occurred!
+[4.054s] See also "/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver/CMakeFiles/CMakeOutput.log".
+[4.061s] Invoked command in '/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver' returned '1': CMAKE_PREFIX_PATH=/opt/ros/galactic /usr/bin/cmake /home/loisyaelee/dev_ws/src/yost_imu -DCMAKE_INSTALL_PREFIX=/home/loisyaelee/dev_ws/src/yost_imu/install/yost_imu_driver

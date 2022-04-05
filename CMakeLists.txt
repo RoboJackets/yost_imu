@@ -13,7 +13,6 @@ find_package(geometry_msgs REQUIRED)
 
 add_executable(${PROJECT_NAME}
   src/YostLabDriver.cpp
-  src/YostLabDriverNode.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -21,7 +20,7 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
-ament_target_dependencies(${PROJECT_NAME} serial rclcpp Eigen3)
+ament_target_dependencies(${PROJECT_NAME} serial rclcpp Eigen3 diagnostic_msgs)
 ament_export_dependencies(eigen3_cmake_module)
 ament_export_dependencies(Eigen3)
 ament_export_dependencies(serial)

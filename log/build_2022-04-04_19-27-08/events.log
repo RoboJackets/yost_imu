@@ -1,0 +1,70 @@
+[0.000000] (-) TimerEvent: {}
+[0.000631] (yost_imu_driver) JobQueued: {'identifier': 'yost_imu_driver', 'dependencies': OrderedDict()}
+[0.004141] (yost_imu_driver) JobStarted: {'identifier': 'yost_imu_driver'}
+[0.035828] (yost_imu_driver) JobProgress: {'identifier': 'yost_imu_driver', 'progress': 'cmake'}
+[0.039612] (yost_imu_driver) Command: {'cmd': ['/usr/bin/cmake', '/home/loisyaelee/dev_ws/src/yost_imu', '-DCMAKE_INSTALL_PREFIX=/home/loisyaelee/dev_ws/src/yost_imu/install/yost_imu_driver'], 'cwd': '/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'loisyaelee'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/galactic/opt/yaml_cpp_vendor/lib:/opt/ros/galactic/opt/rviz_ogre_vendor/lib:/opt/ros/galactic/lib/x86_64-linux-gnu:/opt/ros/galactic/lib'), ('WT_PROFILE_ID', '{2c4de342-38b7-51cf-b940-2309a097f518}'), ('HOME', '/home/loisyaelee'), ('OLDPWD', '/home/loisyaelee/dev_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('WSL_DISTRO_NAME', 'Ubuntu'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'galactic'), ('LOGNAME', 'loisyaelee'), ('NAME', 'DESKTOP-OPTLL4V'), ('WSL_INTEROP', '/run/WSL/413_interop'), ('PULSE_SERVER', '/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/loisyaelee/.local/bin:/opt/ros/galactic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Eclipse Adoptium/jdk-11.0.13.8-hotspot/bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files (x86)/IVI Foundation/VISA/WinNT/Bin/:/mnt/c/Program Files/IVI Foundation/VISA/Win64/Bin/:/mnt/c/Program Files (x86)/National Instruments/Shared/LabVIEW CLI:/mnt/c/Program Files (x86)/IVI Foundation/VISA/WinNT/Bin:/mnt/c/Program Files/MATLAB/R2021a/runtime/win64:/mnt/c/Program Files/MATLAB/R2021a/bin:/mnt/c/Users/loisy/AppData/Local/Programs/Python/Python38/Scripts/:/mnt/c/Users/loisy/AppData/Local/Programs/Python/Python38/:/mnt/c/Users/loisy/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/loisy/AppData/Local/GitHubDesktop/bin:/mnt/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin:/mnt/c/Users/loisy/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin'), ('WT_SESSION', '8815ffe3-cad3-434b-a3ff-dcac0c7c168a'), ('XDG_RUNTIME_DIR', '/mnt/wslg/runtime-dir'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/galactic'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/galactic/lib/python3.8/site-packages'), ('COLCON', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'WT_SESSION::WT_PROFILE_ID'), ('CMAKE_PREFIX_PATH', '/opt/ros/galactic')]), 'shell': False}
+[0.090926] (yost_imu_driver) StdoutLine: {'line': b'-- Found ament_cmake: 1.1.5 (/opt/ros/galactic/share/ament_cmake/cmake)\n'}
+[0.098586] (-) TimerEvent: {}
+[0.169505] (yost_imu_driver) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.198875] (-) TimerEvent: {}
+[0.299663] (-) TimerEvent: {}
+[0.400535] (-) TimerEvent: {}
+[0.501573] (-) TimerEvent: {}
+[0.602586] (-) TimerEvent: {}
+[0.703462] (-) TimerEvent: {}
+[0.804349] (-) TimerEvent: {}
+[0.905306] (-) TimerEvent: {}
+[1.006331] (-) TimerEvent: {}
+[1.107317] (-) TimerEvent: {}
+[1.208248] (-) TimerEvent: {}
+[1.309250] (-) TimerEvent: {}
+[1.410126] (-) TimerEvent: {}
+[1.511075] (-) TimerEvent: {}
+[1.612391] (-) TimerEvent: {}
+[1.713323] (-) TimerEvent: {}
+[1.814433] (-) TimerEvent: {}
+[1.915190] (-) TimerEvent: {}
+[2.016371] (-) TimerEvent: {}
+[2.117413] (-) TimerEvent: {}
+[2.218479] (-) TimerEvent: {}
+[2.319415] (-) TimerEvent: {}
+[2.420473] (-) TimerEvent: {}
+[2.521429] (-) TimerEvent: {}
+[2.622506] (-) TimerEvent: {}
+[2.723677] (-) TimerEvent: {}
+[2.824679] (-) TimerEvent: {}
+[2.925586] (-) TimerEvent: {}
+[3.026433] (-) TimerEvent: {}
+[3.127366] (-) TimerEvent: {}
+[3.228236] (-) TimerEvent: {}
+[3.329210] (-) TimerEvent: {}
+[3.430156] (-) TimerEvent: {}
+[3.531143] (-) TimerEvent: {}
+[3.632275] (-) TimerEvent: {}
+[3.733370] (-) TimerEvent: {}
+[3.834229] (-) TimerEvent: {}
+[3.935129] (-) TimerEvent: {}
+[4.035991] (-) TimerEvent: {}
+[4.047592] (yost_imu_driver) StderrLine: {'line': b'CMake Error at CMakeLists.txt:5 (find_package):\n'}
+[4.049446] (yost_imu_driver) StderrLine: {'line': b'  By not providing "Findserial.cmake" in CMAKE_MODULE_PATH this project has\n'}
+[4.049814] (yost_imu_driver) StderrLine: {'line': b'  asked CMake to find a package configuration file provided by "serial", but\n'}
+[4.050226] (yost_imu_driver) StderrLine: {'line': b'  CMake did not find one.\n'}
+[4.050512] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[4.050764] (yost_imu_driver) StderrLine: {'line': b'  Could not find a package configuration file provided by "serial" with any\n'}
+[4.051138] (yost_imu_driver) StderrLine: {'line': b'  of the following names:\n'}
+[4.051450] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[4.052004] (yost_imu_driver) StderrLine: {'line': b'    serialConfig.cmake\n'}
+[4.052318] (yost_imu_driver) StderrLine: {'line': b'    serial-config.cmake\n'}
+[4.052578] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[4.052829] (yost_imu_driver) StderrLine: {'line': b'  Add the installation prefix of "serial" to CMAKE_PREFIX_PATH or set\n'}
+[4.053365] (yost_imu_driver) StderrLine: {'line': b'  "serial_DIR" to a directory containing one of the above files.  If "serial"\n'}
+[4.054032] (yost_imu_driver) StderrLine: {'line': b'  provides a separate development package or SDK, be sure it has been\n'}
+[4.054501] (yost_imu_driver) StderrLine: {'line': b'  installed.\n'}
+[4.055539] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[4.056651] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[4.057358] (yost_imu_driver) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[4.058072] (yost_imu_driver) StdoutLine: {'line': b'See also "/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver/CMakeFiles/CMakeOutput.log".\n'}
+[4.064637] (yost_imu_driver) CommandEnded: {'returncode': 1}
+[4.126930] (yost_imu_driver) JobEnded: {'identifier': 'yost_imu_driver', 'rc': 1}
+[4.136235] (-) TimerEvent: {}
+[4.140007] (-) EventReactorShutdown: {}

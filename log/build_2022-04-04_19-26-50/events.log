@@ -1,0 +1,136 @@
+[0.000000] (-) TimerEvent: {}
+[0.000482] (yost_imu_driver) JobQueued: {'identifier': 'yost_imu_driver', 'dependencies': OrderedDict()}
+[0.000743] (yost_imu_driver) JobStarted: {'identifier': 'yost_imu_driver'}
+[0.061687] (yost_imu_driver) JobProgress: {'identifier': 'yost_imu_driver', 'progress': 'cmake'}
+[0.064898] (yost_imu_driver) Command: {'cmd': ['/usr/bin/cmake', '/home/loisyaelee/dev_ws/src/yost_imu', '-DCMAKE_INSTALL_PREFIX=/home/loisyaelee/dev_ws/src/yost_imu/install/yost_imu_driver'], 'cwd': '/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'loisyaelee'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/galactic/opt/yaml_cpp_vendor/lib:/opt/ros/galactic/opt/rviz_ogre_vendor/lib:/opt/ros/galactic/lib/x86_64-linux-gnu:/opt/ros/galactic/lib'), ('WT_PROFILE_ID', '{2c4de342-38b7-51cf-b940-2309a097f518}'), ('HOME', '/home/loisyaelee'), ('OLDPWD', '/home/loisyaelee/dev_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('WSL_DISTRO_NAME', 'Ubuntu'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'galactic'), ('LOGNAME', 'loisyaelee'), ('NAME', 'DESKTOP-OPTLL4V'), ('WSL_INTEROP', '/run/WSL/413_interop'), ('PULSE_SERVER', '/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/loisyaelee/.local/bin:/opt/ros/galactic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Eclipse Adoptium/jdk-11.0.13.8-hotspot/bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files (x86)/IVI Foundation/VISA/WinNT/Bin/:/mnt/c/Program Files/IVI Foundation/VISA/Win64/Bin/:/mnt/c/Program Files (x86)/National Instruments/Shared/LabVIEW CLI:/mnt/c/Program Files (x86)/IVI Foundation/VISA/WinNT/Bin:/mnt/c/Program Files/MATLAB/R2021a/runtime/win64:/mnt/c/Program Files/MATLAB/R2021a/bin:/mnt/c/Users/loisy/AppData/Local/Programs/Python/Python38/Scripts/:/mnt/c/Users/loisy/AppData/Local/Programs/Python/Python38/:/mnt/c/Users/loisy/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/loisy/AppData/Local/GitHubDesktop/bin:/mnt/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin:/mnt/c/Users/loisy/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin'), ('WT_SESSION', '8815ffe3-cad3-434b-a3ff-dcac0c7c168a'), ('XDG_RUNTIME_DIR', '/mnt/wslg/runtime-dir'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/galactic'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/galactic/lib/python3.8/site-packages'), ('COLCON', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'WT_SESSION::WT_PROFILE_ID'), ('CMAKE_PREFIX_PATH', '/opt/ros/galactic')]), 'shell': False}
+[0.096075] (-) TimerEvent: {}
+[0.197103] (-) TimerEvent: {}
+[0.298095] (-) TimerEvent: {}
+[0.399144] (-) TimerEvent: {}
+[0.500002] (-) TimerEvent: {}
+[0.600774] (-) TimerEvent: {}
+[0.701721] (-) TimerEvent: {}
+[0.802896] (-) TimerEvent: {}
+[0.903819] (-) TimerEvent: {}
+[1.004816] (-) TimerEvent: {}
+[1.105879] (-) TimerEvent: {}
+[1.207392] (-) TimerEvent: {}
+[1.238039] (yost_imu_driver) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.4.0\n'}
+[1.307903] (-) TimerEvent: {}
+[1.409231] (-) TimerEvent: {}
+[1.510259] (-) TimerEvent: {}
+[1.611221] (-) TimerEvent: {}
+[1.712408] (-) TimerEvent: {}
+[1.813347] (-) TimerEvent: {}
+[1.914186] (-) TimerEvent: {}
+[2.015125] (-) TimerEvent: {}
+[2.116154] (-) TimerEvent: {}
+[2.217072] (-) TimerEvent: {}
+[2.291487] (yost_imu_driver) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.4.0\n'}
+[2.317318] (-) TimerEvent: {}
+[2.418375] (-) TimerEvent: {}
+[2.519648] (-) TimerEvent: {}
+[2.620635] (-) TimerEvent: {}
+[2.721580] (-) TimerEvent: {}
+[2.822850] (-) TimerEvent: {}
+[2.826134] (yost_imu_driver) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[2.923186] (-) TimerEvent: {}
+[3.024273] (-) TimerEvent: {}
+[3.125302] (-) TimerEvent: {}
+[3.226328] (-) TimerEvent: {}
+[3.327834] (-) TimerEvent: {}
+[3.392478] (yost_imu_driver) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[3.404510] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[3.428050] (-) TimerEvent: {}
+[3.529083] (-) TimerEvent: {}
+[3.629980] (-) TimerEvent: {}
+[3.730890] (-) TimerEvent: {}
+[3.831659] (-) TimerEvent: {}
+[3.915870] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[3.931992] (-) TimerEvent: {}
+[3.958270] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[3.960448] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[3.975064] (yost_imu_driver) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[4.032342] (-) TimerEvent: {}
+[4.133095] (-) TimerEvent: {}
+[4.233911] (-) TimerEvent: {}
+[4.334760] (-) TimerEvent: {}
+[4.435724] (-) TimerEvent: {}
+[4.536763] (-) TimerEvent: {}
+[4.542199] (yost_imu_driver) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[4.546801] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[4.637092] (-) TimerEvent: {}
+[4.738013] (-) TimerEvent: {}
+[4.839038] (-) TimerEvent: {}
+[4.940266] (-) TimerEvent: {}
+[5.041288] (-) TimerEvent: {}
+[5.117349] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[5.141605] (-) TimerEvent: {}
+[5.155827] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[5.157315] (yost_imu_driver) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[5.184433] (yost_imu_driver) StdoutLine: {'line': b'-- Found ament_cmake: 1.1.5 (/opt/ros/galactic/share/ament_cmake/cmake)\n'}
+[5.241908] (-) TimerEvent: {}
+[5.290134] (yost_imu_driver) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[5.290837] (yost_imu_driver) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[5.342205] (-) TimerEvent: {}
+[5.442903] (-) TimerEvent: {}
+[5.543915] (-) TimerEvent: {}
+[5.644651] (-) TimerEvent: {}
+[5.745396] (-) TimerEvent: {}
+[5.846370] (-) TimerEvent: {}
+[5.947480] (-) TimerEvent: {}
+[6.048609] (-) TimerEvent: {}
+[6.149672] (-) TimerEvent: {}
+[6.250703] (-) TimerEvent: {}
+[6.351617] (-) TimerEvent: {}
+[6.452681] (-) TimerEvent: {}
+[6.553703] (-) TimerEvent: {}
+[6.654728] (-) TimerEvent: {}
+[6.755484] (-) TimerEvent: {}
+[6.856433] (-) TimerEvent: {}
+[6.957477] (-) TimerEvent: {}
+[7.058760] (-) TimerEvent: {}
+[7.159719] (-) TimerEvent: {}
+[7.260541] (-) TimerEvent: {}
+[7.361367] (-) TimerEvent: {}
+[7.462411] (-) TimerEvent: {}
+[7.563317] (-) TimerEvent: {}
+[7.664362] (-) TimerEvent: {}
+[7.765315] (-) TimerEvent: {}
+[7.866066] (-) TimerEvent: {}
+[7.967055] (-) TimerEvent: {}
+[8.067955] (-) TimerEvent: {}
+[8.168777] (-) TimerEvent: {}
+[8.269625] (-) TimerEvent: {}
+[8.370533] (-) TimerEvent: {}
+[8.471436] (-) TimerEvent: {}
+[8.572259] (-) TimerEvent: {}
+[8.673162] (-) TimerEvent: {}
+[8.774103] (-) TimerEvent: {}
+[8.875068] (-) TimerEvent: {}
+[8.975977] (-) TimerEvent: {}
+[9.076863] (-) TimerEvent: {}
+[9.177567] (yost_imu_driver) StderrLine: {'line': b'CMake Error at CMakeLists.txt:5 (find_package):\n'}
+[9.178367] (-) TimerEvent: {}
+[9.178725] (yost_imu_driver) StderrLine: {'line': b'  By not providing "Findserial.cmake" in CMAKE_MODULE_PATH this project has\n'}
+[9.179416] (yost_imu_driver) StderrLine: {'line': b'  asked CMake to find a package configuration file provided by "serial", but\n'}
+[9.180184] (yost_imu_driver) StderrLine: {'line': b'  CMake did not find one.\n'}
+[9.180698] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[9.181478] (yost_imu_driver) StderrLine: {'line': b'  Could not find a package configuration file provided by "serial" with any\n'}
+[9.182166] (yost_imu_driver) StderrLine: {'line': b'  of the following names:\n'}
+[9.182805] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[9.183463] (yost_imu_driver) StderrLine: {'line': b'    serialConfig.cmake\n'}
+[9.184352] (yost_imu_driver) StderrLine: {'line': b'    serial-config.cmake\n'}
+[9.184653] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[9.184852] (yost_imu_driver) StderrLine: {'line': b'  Add the installation prefix of "serial" to CMAKE_PREFIX_PATH or set\n'}
+[9.185032] (yost_imu_driver) StderrLine: {'line': b'  "serial_DIR" to a directory containing one of the above files.  If "serial"\n'}
+[9.185194] (yost_imu_driver) StderrLine: {'line': b'  provides a separate development package or SDK, be sure it has been\n'}
+[9.185375] (yost_imu_driver) StderrLine: {'line': b'  installed.\n'}
+[9.185629] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[9.185818] (yost_imu_driver) StderrLine: {'line': b'\n'}
+[9.185980] (yost_imu_driver) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[9.186494] (yost_imu_driver) StdoutLine: {'line': b'See also "/home/loisyaelee/dev_ws/src/yost_imu/build/yost_imu_driver/CMakeFiles/CMakeOutput.log".\n'}
+[9.193165] (yost_imu_driver) CommandEnded: {'returncode': 1}
+[9.278826] (-) TimerEvent: {}
+[9.301705] (yost_imu_driver) JobEnded: {'identifier': 'yost_imu_driver', 'rc': 1}
+[9.313747] (-) EventReactorShutdown: {}
