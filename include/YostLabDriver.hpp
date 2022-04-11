@@ -1,25 +1,32 @@
 #pragma once
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/Imu.h>
-#include <sensor_msgs/MagneticField.h>
-#include "SerialInterface.h"
+#include <sensor_msgs/msg/imu.hpp>
+#include <sensor_msgs/msg/magnetic_field.hpp>
 
-#include <tf/tf.h>
+#include "SerialInterface.hpp"
+
+#include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
-#include <diagnostic_updater/diagnostic_updater.h>
-#include <diagnostic_updater/publisher.h>
+#include <diagnostic_updater/diagnostic_updater.hpp>
+// #include <diagnostic_updater/publisher.hpp>
+
+#include <memory>
+
+using namespace std::chrono_literals;
 
 // This is the  basic ros-based device driver of IMU
-class YostLabDriver : SerialInterface
+class YostLabDriver : public rclcpp::Node, SerialInterface
 {
+  
 public:
   //! constructor and destructor
-  YostLabDriver(ros::NodeHandle& nh_, ros::NodeHandle& priv_nh_);
+  YostLabDriver();
   ~YostLabDriver();
   //!
   //! \brief run: runs system
   //!
   void run();
+  void run2();
   //!
   //! \brief getSoftwareVersion
   //! \return returns software string version
@@ -95,22 +102,27 @@ private:
   std::string frame_id_;
 
   // Node Handlers
-  ros::NodeHandle yostlab_priv_nh_;
-  ros::NodeHandle yostlab_nh_;
-  ros::Publisher imu_pub_;
-  ros::Publisher magnet_pub_;
+  // ros::NodeHandle yostlab_priv_nh_;
+  // ros::NodeHandle yostlab_nh_;
+  // Node node;
+  rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_pub_;
+
+  // ros::Publisher imu_pub_;
+  // imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 10);
+  // ros::Publisher magnet_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::MagneticField>::SharedPtr magnet_pub_;
 
   // Diagnostic_updater
-  diagnostic_updater::Updater updater;
+  std::unique_ptr<diagnostic_updater::Updater> updater;
 
   std::string software_version_;
   std::string calibration_mode_;
   std::string mi_mode_;
   std::string axis_direction_;
-  double sensor_temp_, quaternion_length_, spin_frequency_;
+  double sensor_temp_, quaternion_length_;
   int msg_counter_;
-  ros::Time lastUpdateTime_;
-  tf::Quaternion last_quat_;
+  rclcpp::Time lastUpdateTime_;
+  tf2::Quaternion last_quat_;
 
   // Constants
   const double GRAVITY = 9.80665;
@@ -240,5 +252,5 @@ private:
   static constexpr auto RESTORE_FACTORY_SETTINGS = ":224\n";
   static constexpr auto SOFTWARE_RESET = ":226\n";
   //! logger space
-  static constexpr auto logger = "[ YostImuDriver ] ";
+  // static constexpr auto logger = "[ YostImuDriver ] ";
 };  // YostLabDriver
