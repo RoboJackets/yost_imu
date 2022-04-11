@@ -1,7 +1,6 @@
 #include "YostLabDriver.hpp"
 #include "SerialInterface.hpp"
 #include <diagnostic_msgs/msg/diagnostic_status.hpp>
-// #include <parameter_assertions/assertions.h>
 
 using namespace std::chrono_literals;
 
@@ -18,19 +17,11 @@ YostLabDriver::YostLabDriver() : Node("IMU"), SerialInterface()
   magnet_pub_ = this->create_publisher<sensor_msgs::msg::MagneticField>("/imu_mag", 10);
 
   // use identity matrix as default orientation correction
-  // assertions::param(yostlab_priv_nh_, "imu_orientation_correction", imu_orientation_correction_,
-                    // std::vector<double>{ 1, 0, 0, 0, 1, 0, 0, 0, 1 });
   this->declare_parameter<std::vector<double>>("imu_orientation_correction", { 1, 0, 0, 0, 1, 0, 0, 0, 1 });
   this->get_parameter("imu_orientation_correction", imu_orientation_correction_);
-  // assertions::param(yostlab_priv_nh_, "orientation_rotation", orientation_rotation_, 0.0);
   this->declare_parameter<double>("orientation_rotation", 0.0);
   this->get_parameter("orientation_rotation", orientation_rotation_);
-  // assertions::getParam(yostlab_priv_nh_, "frame_id", frame_id_);
   this->get_parameter("frame_id", frame_id_);
-  // yostlab_priv_nh_.param("spin_frequency", spin_frequency_, 100.0);
-  // this->declare_parameter<double>("spin_frequency", 100.0);
-  // this->get_parameter("spin_frequency", spin_frequency_);
-  // assertions::param(yostlab_priv_nh_, "calibrate_imu", calibrate_imu_, false);
   this->declare_parameter<bool>("calibrate_imu", false);
   this->get_parameter("calibrate_imu", calibrate_imu_);
 
@@ -262,7 +253,7 @@ void YostLabDriver::setAndCheckIMUSettings()
 void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
 {
   // orientation correction matrices in 3x3 row-major format and quaternion
-  /*static const Eigen::Matrix<double, 3, 3, Eigen::RowMajor> correction_mat(imu_orientation_correction_.data());
+  static const Eigen::Matrix<double, 3, 3, Eigen::RowMajor> correction_mat(imu_orientation_correction_.data());
   static const Eigen::Quaternion<double> correction_mat_quat(correction_mat);
   static tf2::Quaternion rot;
   rot.setRPY(0, 0, orientation_rotation_);
@@ -291,11 +282,11 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
   rpy.y = pitch;
   rpy.z = yaw;
 
-  // geometry_msgs::msg::Quaternion geometry_quaternion;
-  // geometry_quaternion.x = quat.getX();
-  // geometry_quaternion.y = quat.getY();
-  // geometry_quaternion.z = quat.getZ();
-  // geometry_quaternion.w = quat.getW();
+  geometry_msgs::msg::Quaternion geometry_quaternion;
+  geometry_quaternion.x = quat.getX();
+  geometry_quaternion.y = quat.getY();
+  geometry_quaternion.z = quat.getZ();
+  geometry_quaternion.w = quat.getW();
 
 
   // Filtered orientation estimate
@@ -330,12 +321,11 @@ void YostLabDriver::createAndPublishIMUMessage(std::vector<double> &parsed_val)
 
   sensor_temp_ = parsed_val[13];
 
-  // imu_pub_->publish(imu_msg);
-  // magnet_pub_->publish(magnet_msg);  // Published in teslas
+  imu_pub_->publish(imu_msg);
+  magnet_pub_->publish(magnet_msg);  // Published in teslas
   lastUpdateTime_ = this->get_clock()->now();
   last_quat_ = quat;
   msg_counter_++;
-  */
 }
 
 int YostLabDriver::addToParsedVals(const std::string &buf, std::vector<double> &parsed_vals)

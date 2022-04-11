@@ -23,14 +23,8 @@ private:
   bool connected_ = false;
   // logger zone
   const std::string log_zone_;
-  // local serial node
-  // rclcpp::Node *local_serial_node_;
 
 public:
-  // SerialInterface() : log_zone_("[ SerialInterface ] ")
-  // {
-    
-  // }
 
   void setSerialNode(rclcpp::Node &serial_node_)
   {
