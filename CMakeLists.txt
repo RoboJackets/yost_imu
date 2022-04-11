@@ -9,7 +9,6 @@ find_package(diagnostic_updater REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
 find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3)
-find_package(geometry_msgs REQUIRED)
 
 add_executable(${PROJECT_NAME}
   src/YostLabDriver.cpp
@@ -21,7 +20,7 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
-ament_target_dependencies(${PROJECT_NAME} serial rclcpp Eigen3)
+ament_target_dependencies(${PROJECT_NAME} serial rclcpp Eigen3 diagnostic_updater diagnostic_msgs sensor_msgs)
 ament_export_dependencies(eigen3_cmake_module)
 ament_export_dependencies(Eigen3)
 ament_export_dependencies(serial)
@@ -29,10 +28,6 @@ ament_export_dependencies(rclcpp)
 ament_export_dependencies(sensor_msgs)
 ament_export_dependencies(diagnostic_updater)
 ament_export_dependencies(diagnostic_msgs)
-ament_export_dependencies(geometry_msgs)
-
-
-
 
 install(TARGETS
   ${PROJECT_NAME}
